@@ -19,7 +19,7 @@ public class AlphaChanger : MonoBehaviour
         _renderer.material.color = _color;
     }
 
-    public void LifeTime(float lifeTime, Color color)
+    public void SetLifeTime(float lifeTime, Color color)
     {
         _color = color;
         _alphaDelta = _color.a / lifeTime;

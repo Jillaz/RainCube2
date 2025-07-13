@@ -24,7 +24,7 @@ public class Bomb : MonoBehaviour
         _rigidbody.angularVelocity = Vector3.zero;
         transform.rotation = Quaternion.Euler(Vector3.zero);
         StartCoroutine(ExecuteAfterTime());
-        _alphaChanger.LifeTime(_lifeTime, _color);
+        _alphaChanger.SetLifeTime(_lifeTime, _color);
     }
 
     private void Awake()

@@ -11,12 +11,21 @@ public class BombSpawner : MonoBehaviour
 
     public event Action Spawned;
 
-    public int CountActive => _pool.CountActive;
-    public int CountAll => _pool.CountAll;
+    public event Action<int> Geted
+    {
+        add=>_pool.Geted += value;
+        remove => _pool.Geted -= value;
+    }
+
+    public event Action<int> Created
+    {
+        add => _pool.Created += value;
+        remove => _pool.Created -= value;
+    }
 
     public void AddCube(Cube cube)
     {
-        cube.Release += Get;                
+        cube.Release += Get;
     }
 
     public void RemoveCube(Cube cube)

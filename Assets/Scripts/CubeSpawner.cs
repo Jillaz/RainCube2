@@ -11,11 +11,20 @@ public class CubeSpawner : MonoBehaviour
     [SerializeField] private int _cubeCount = 0;
     [SerializeField] private float _spawnDelay = .5f;
     private GenericPool<Cube> _pool;
-    
+
     public event Action Spawned;
 
-    public int CountActive => _pool.CountActive;
-    public int CountAll => _pool.CountAll;
+    public event Action<int> Geted
+    {
+        add => _pool.Geted += value;
+        remove => _pool.Geted -= value;
+    }
+
+    public event Action<int> Created
+    {
+        add => _pool.Created += value;
+        remove => _pool.Created -= value;
+    }
 
     private void Awake()
     {
@@ -35,8 +44,7 @@ public class CubeSpawner : MonoBehaviour
         {
             while (true)
             {
-                Get();
-                Spawned?.Invoke();
+                Get();                
                 yield return delay;
             }
         }
@@ -54,6 +62,7 @@ public class CubeSpawner : MonoBehaviour
     private void Get()
     {
         Cube cube = _pool.Get();
+        Spawned?.Invoke();
         cube.transform.position = GetSpawnPosition();
         cube.Release += Release;
         _bombSpawner.AddCube(cube);
@@ -62,7 +71,7 @@ public class CubeSpawner : MonoBehaviour
     private void Release(Cube cube)
     {
         _pool.Release(cube);
-        cube.Release -= Release;     
+        cube.Release -= Release;
         _bombSpawner.RemoveCube(cube);
     }
 
