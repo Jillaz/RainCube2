@@ -70,6 +70,7 @@ public class CubeSpawner : MonoBehaviour
 
     private void Release(Cube cube)
     {
+        cube.SetDefaults();
         _pool.Release(cube);
         cube.Release -= Release;
         _bombSpawner.RemoveCube(cube);

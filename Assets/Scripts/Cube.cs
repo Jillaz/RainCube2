@@ -42,7 +42,6 @@ public class Cube : MonoBehaviour
     private IEnumerator ExecuteAfterTime()
     {
         yield return new WaitForSeconds(_lifeTime);
-        SetDefaults();
         Release?.Invoke(this);
     }    
 }
