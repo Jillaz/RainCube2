@@ -1,23 +1,18 @@
 using System;
 using UnityEngine;
 
-public class BombSpawner : MonoBehaviour
+public class BombSpawner : Spawner
 {
     [SerializeField] private Bomb _prefabBomb;
-    [SerializeField] private int _poolCapacity = 5;
-    [SerializeField] private int _poolMaxSize = 10;
     private GenericPool<Bomb> _pool;
-    private Cube _cube;
 
-    public event Action Spawned;
-
-    public event Action<int> Geted
+    public override event Action<int> Geted
     {
-        add=>_pool.Geted += value;
+        add => _pool.Geted += value;
         remove => _pool.Geted -= value;
     }
 
-    public event Action<int> Created
+    public override event Action<int> Created
     {
         add => _pool.Created += value;
         remove => _pool.Created -= value;
@@ -41,7 +36,7 @@ public class BombSpawner : MonoBehaviour
     private void Get(Cube cube)
     {
         Bomb bomb = _pool.Get();
-        Spawned?.Invoke();
+        SpawnHandler();
         bomb.transform.position = cube.transform.position;
         bomb.Init();
         bomb.Release += Release;

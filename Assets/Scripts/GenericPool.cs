@@ -24,8 +24,6 @@ public class GenericPool<T> where T : Component
     public event Action<int> Created;
     public event Action<int> Geted;
 
-    public int CountActive => _pool.CountActive;
-    public int CountAll => _pool.CountAll;
     public T Get () => _pool.Get();
     public void Release(T prefab) => _pool.Release(prefab);
 

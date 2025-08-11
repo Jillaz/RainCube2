@@ -2,7 +2,9 @@ using TMPro;
 using UnityEngine;
 
 public class StatsDisplayer : MonoBehaviour
-{    
+{
+    [SerializeField] private Spawner _spawner;
+    [SerializeField] private Counter _counter;
     [SerializeField] private TextMeshProUGUI _textActive;
     [SerializeField] private TextMeshProUGUI _textCreated;
     [SerializeField] private TextMeshProUGUI _textSpawned;
@@ -10,19 +12,33 @@ public class StatsDisplayer : MonoBehaviour
     private string _defaultTextCreated;
     private string _defaultTextSpawned;
 
-    public void Active(string active)
+    private void Start()
     {
-        _textActive.text = _defaultTextActive + active;
+        _spawner.Spawned += Spawned;
+        _spawner.Geted += Geted;
+        _spawner.Created += Created;
     }
 
-    public void Created(string created)
+    private void OnDisable()
     {
-        _textCreated.text = _defaultTextCreated + created;
+        _spawner.Spawned -= Spawned;
+        _spawner.Geted -= Geted;
+        _spawner.Created -= Created;
     }
 
-    public void Spawned(string spawned)
+    public void Geted(int value)
     {
-        _textSpawned.text = _defaultTextSpawned + spawned;
+        _textActive.text = _defaultTextActive + value.ToString();
+    }
+
+    public void Created(int value)
+    {
+        _textCreated.text = _defaultTextCreated + value.ToString();
+    }
+
+    public void Spawned()
+    {
+        _textSpawned.text = _defaultTextSpawned + _counter.Number.ToString();
     }
 
     private void Awake()

@@ -1,14 +1,14 @@
 using UnityEngine;
 
-public class CubeSpawnCounter : MonoBehaviour
-{
-    [SerializeField] private CubeSpawner _spawner;
+public class Counter : MonoBehaviour
+{    
+    [SerializeField] private Spawner _spawner;
 
     public int Number { get; private set; } = 0;
 
     private void OnEnable()
     {
-        _spawner.Spawned += Spawned;        
+        _spawner.Spawned += Spawned;
     }
 
     private void OnDisable()

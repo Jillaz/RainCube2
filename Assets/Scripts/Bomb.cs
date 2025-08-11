@@ -17,6 +17,14 @@ public class Bomb : MonoBehaviour
 
     public event Action<Bomb> Release;
 
+    private void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
+        _renderer = GetComponent<Renderer>();
+        _alphaChanger = GetComponent<AlphaChanger>();
+        _color = _renderer.material.color;
+    }
+
     public void Init()
     {
         _lifeTime = UnityEngine.Random.Range(_minLifeTime, _maxLifeTime);
@@ -25,15 +33,7 @@ public class Bomb : MonoBehaviour
         transform.rotation = Quaternion.Euler(Vector3.zero);
         StartCoroutine(ExecuteAfterTime());
         _alphaChanger.SetLifeTime(_lifeTime, _color);
-    }
-
-    private void Awake()
-    {
-        _rigidbody = GetComponent<Rigidbody>();
-        _renderer = GetComponent<Renderer>();
-        _alphaChanger = GetComponent<AlphaChanger>();
-        _color = _renderer.material.color;
-    }  
+    }    
 
     private void Explode()
     {

@@ -13,17 +13,17 @@ public class Cube : MonoBehaviour
 
     public event Action<Cube> Release;
 
+    private void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
+    }
+
     public void SetDefaults()
     {
         _isHitPlatform = false;
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.angularVelocity = Vector3.zero;
         transform.rotation = Quaternion.Euler(Vector3.zero);
-    }
-
-    private void Awake()
-    {
-        _rigidbody = GetComponent<Rigidbody>();
     }
 
     private void OnCollisionEnter(Collision collision)

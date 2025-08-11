@@ -2,25 +2,21 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class CubeSpawner : MonoBehaviour
+public class CubeSpawner : Spawner
 {
     [SerializeField] private Cube _prefabCube;
     [SerializeField] private BombSpawner _bombSpawner;
-    [SerializeField] private int _poolCapacity = 5;
-    [SerializeField] private int _poolMaxSize = 10;
     [SerializeField] private int _cubeCount = 0;
     [SerializeField] private float _spawnDelay = .5f;
     private GenericPool<Cube> _pool;
 
-    public event Action Spawned;
-
-    public event Action<int> Geted
+    public override event Action<int> Geted
     {
         add => _pool.Geted += value;
         remove => _pool.Geted -= value;
     }
 
-    public event Action<int> Created
+    public override event Action<int> Created
     {
         add => _pool.Created += value;
         remove => _pool.Created -= value;
@@ -42,7 +38,7 @@ public class CubeSpawner : MonoBehaviour
 
         if (_cubeCount == 0)
         {
-            while (true)
+            while (enabled)
             {
                 Get();                
                 yield return delay;
@@ -62,7 +58,7 @@ public class CubeSpawner : MonoBehaviour
     private void Get()
     {
         Cube cube = _pool.Get();
-        Spawned?.Invoke();
+        SpawnHandler();
         cube.transform.position = GetSpawnPosition();
         cube.Release += Release;
         _bombSpawner.AddCube(cube);
