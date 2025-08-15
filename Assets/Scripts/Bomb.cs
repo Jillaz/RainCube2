@@ -2,20 +2,16 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class Bomb : MonoBehaviour
+public class Bomb : Items
 {
     [SerializeField] private float _explosionRadius = 10;
     [SerializeField] private float _explosionForce = 1000;
-    [SerializeField] private float _minLifeTime = 2f;
-    [SerializeField] private float _maxLifeTime = 5f;    
     private Exploder _exploder;
-    private Rigidbody _rigidbody;
     private Renderer _renderer;
     private AlphaChanger _alphaChanger;
     private Color _color;
-    private float _lifeTime;
 
-    public event Action<Bomb> Release;
+    public event Action<Bomb> Released;
 
     private void Awake()
     {
@@ -26,7 +22,7 @@ public class Bomb : MonoBehaviour
         _exploder = new Exploder(transform.position, _explosionForce, _explosionRadius);
     }
 
-    public void Init()
+    public override void Init()
     {
         _lifeTime = UnityEngine.Random.Range(_minLifeTime, _maxLifeTime);
         _rigidbody.velocity = Vector3.zero;
@@ -41,6 +37,6 @@ public class Bomb : MonoBehaviour
         yield return new WaitForSeconds(_lifeTime);
 
         _exploder.Explode();
-        Release?.Invoke(this);        
+        Released?.Invoke(this);        
     }
 }

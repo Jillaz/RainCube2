@@ -4,24 +4,25 @@ using UnityEngine;
 public class StatsDisplayer : MonoBehaviour
 {
     [SerializeField] private Spawner _spawner;
-    [SerializeField] private Counter _counter;
     [SerializeField] private TextMeshProUGUI _textActive;
     [SerializeField] private TextMeshProUGUI _textCreated;
     [SerializeField] private TextMeshProUGUI _textSpawned;
+    private GenericCounter<Spawner> _counterGeneric;
     private string _defaultTextActive;
     private string _defaultTextCreated;
     private string _defaultTextSpawned;
 
     private void Start()
     {
-        _spawner.Spawned += Spawned;
+        _counterGeneric = new GenericCounter<Spawner>(_spawner);
+        _counterGeneric.ValueChanged += Spawned;
         _spawner.Geted += Geted;
         _spawner.Created += Created;
     }
 
     private void OnDisable()
     {
-        _spawner.Spawned -= Spawned;
+        _counterGeneric.ValueChanged -= Spawned;
         _spawner.Geted -= Geted;
         _spawner.Created -= Created;
     }
@@ -38,7 +39,7 @@ public class StatsDisplayer : MonoBehaviour
 
     public void Spawned()
     {
-        _textSpawned.text = _defaultTextSpawned + _counter.Number.ToString();
+        _textSpawned.text = _defaultTextSpawned + _counterGeneric.Number.ToString();
     }
 
     private void Awake()

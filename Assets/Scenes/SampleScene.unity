@@ -243,10 +243,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _poolCapacity: 20
   _poolMaxSize: 30
-  _prefabCube: {fileID: 4013754261288781031, guid: bc7e031c6c6530449ae68529c5ae345c, type: 3}
   _bombSpawner: {fileID: 809221532}
   _cubeCount: 0
   _spawnDelay: 0.3
+  _prefabCube: {fileID: 4013754261288781031, guid: bc7e031c6c6530449ae68529c5ae345c, type: 3}
 --- !u!1 &42566477
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,7 +426,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 565864961}
-  - component: {fileID: 565864966}
   - component: {fileID: 565864965}
   m_Layer: 5
   m_Name: Bomb
@@ -470,23 +469,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawner: {fileID: 809221532}
-  _counter: {fileID: 565864966}
   _textActive: {fileID: 1199377789}
   _textCreated: {fileID: 1810006492}
   _textSpawned: {fileID: 2028488244}
---- !u!114 &565864966
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 565864960}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8ddd446f9e49294d8e4245e8091887e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spawner: {fileID: 809221532}
 --- !u!1 &600429542
 GameObject:
   m_ObjectHideFlags: 0
@@ -2253,7 +2238,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1976442521}
-  - component: {fileID: 1976442525}
   - component: {fileID: 1976442526}
   m_Layer: 5
   m_Name: Cube
@@ -2284,19 +2268,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1976442525
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1976442520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8ddd446f9e49294d8e4245e8091887e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spawner: {fileID: 23546349}
 --- !u!114 &1976442526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2310,7 +2281,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawner: {fileID: 23546349}
-  _counter: {fileID: 1976442525}
   _textActive: {fileID: 643553772}
   _textCreated: {fileID: 811446948}
   _textSpawned: {fileID: 1175762157}

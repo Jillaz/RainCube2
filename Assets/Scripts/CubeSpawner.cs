@@ -1,30 +1,16 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
 public class CubeSpawner : Spawner
 {
-    [SerializeField] private Cube _prefabCube;
     [SerializeField] private BombSpawner _bombSpawner;
     [SerializeField] private int _cubeCount = 0;
     [SerializeField] private float _spawnDelay = .5f;
-    private GenericPool<Cube> _pool;
-
-    public override event Action<int> Geted
-    {
-        add => _pool.Geted += value;
-        remove => _pool.Geted -= value;
-    }
-
-    public override event Action<int> Created
-    {
-        add => _pool.Created += value;
-        remove => _pool.Created -= value;
-    }
+    [SerializeField] private Cube _prefabCube;   
 
     private void Awake()
     {
-        _pool = new GenericPool<Cube>(_prefabCube, _poolCapacity, _poolMaxSize);
+        _spawner = new GenericSpawner<Items>(_prefabCube, _poolCapacity, _poolMaxSize);
     }
 
     private void Start()
@@ -40,7 +26,7 @@ public class CubeSpawner : Spawner
         {
             while (enabled)
             {
-                Get();                
+                Get();
                 yield return delay;
             }
         }
@@ -56,19 +42,18 @@ public class CubeSpawner : Spawner
     }
 
     private void Get()
-    {
-        Cube cube = _pool.Get();
-        SpawnHandler();
+    {        
+        Cube cube = (Cube)_spawner.Get();
         cube.transform.position = GetSpawnPosition();
-        cube.Release += Release;
+        cube.Released += Release;
         _bombSpawner.AddCube(cube);
     }
 
     private void Release(Cube cube)
     {
-        cube.SetDefaults();
-        _pool.Release(cube);
-        cube.Release -= Release;
+        cube.Init();
+        _spawner.Release(cube);
+        cube.Released -= Release;
         _bombSpawner.RemoveCube(cube);
     }
 

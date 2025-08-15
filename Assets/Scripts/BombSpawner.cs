@@ -1,50 +1,35 @@
-using System;
 using UnityEngine;
 
 public class BombSpawner : Spawner
 {
     [SerializeField] private Bomb _prefabBomb;
-    private GenericPool<Bomb> _pool;
 
-    public override event Action<int> Geted
+    private void Awake()
     {
-        add => _pool.Geted += value;
-        remove => _pool.Geted -= value;
-    }
-
-    public override event Action<int> Created
-    {
-        add => _pool.Created += value;
-        remove => _pool.Created -= value;
+        _spawner = new GenericSpawner<Items>(_prefabBomb, _poolCapacity, _poolMaxSize);
     }
 
     public void AddCube(Cube cube)
     {
-        cube.Release += Get;
+        cube.Released += Get;
     }
 
     public void RemoveCube(Cube cube)
     {
-        cube.Release -= Get;
-    }
-
-    private void Awake()
-    {
-        _pool = new GenericPool<Bomb>(_prefabBomb, _poolCapacity, _poolMaxSize);
-    }
+        cube.Released -= Get;
+    }    
 
     private void Get(Cube cube)
     {
-        Bomb bomb = _pool.Get();
-        SpawnHandler();
+        Bomb bomb = (Bomb)_spawner.Get();
         bomb.transform.position = cube.transform.position;
         bomb.Init();
-        bomb.Release += Release;
+        bomb.Released += Release;
     }
 
     private void Release(Bomb bomb)
     {
-        _pool.Release(bomb);
-        bomb.Release -= Release;
+        _spawner.Release(bomb);
+        bomb.Released -= Release;
     }
 }

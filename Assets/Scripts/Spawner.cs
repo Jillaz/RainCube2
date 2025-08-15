@@ -5,23 +5,23 @@ public class Spawner : MonoBehaviour
 {
     [SerializeField] protected int _poolCapacity = 5;
     [SerializeField] protected int _poolMaxSize = 10;
+    protected GenericSpawner<Items> _spawner;
 
-    public event Action Spawned;
-
-    public virtual event Action<int> Geted
+    public event Action<int> Geted
     {
-        add {}
-        remove {}
+        add => _spawner.Geted += value;
+        remove => _spawner.Geted -= value;
     }
 
-    public virtual event Action<int> Created
+    public event Action<int> Created
     {
-        add {}
-        remove {}
+        add => _spawner.Created += value;
+        remove => _spawner.Created -= value;
     }
 
-    protected void SpawnHandler()
+    public event Action Spawned
     {
-        Spawned?.Invoke();
+        add => _spawner.Spawned += value;
+        remove => _spawner.Spawned -= value;
     }
 }

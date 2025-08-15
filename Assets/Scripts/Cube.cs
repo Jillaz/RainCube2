@@ -2,23 +2,19 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-public class Cube : MonoBehaviour
-{
-    [SerializeField] private float _minLifeTime = 2f;
-    [SerializeField] private float _maxLifeTime = 5f;
-    private Rigidbody _rigidbody;
-    private float _lifeTime;
+
+public class Cube : Items
+{    
     private bool _isHitPlatform = false;
 
-    public event Action<Cube> Release;
+    public event Action<Cube> Released;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
     }
 
-    public void SetDefaults()
+    public override void Init()
     {
         _isHitPlatform = false;
         _rigidbody.velocity = Vector3.zero;
@@ -42,6 +38,6 @@ public class Cube : MonoBehaviour
     private IEnumerator ExecuteAfterTime()
     {
         yield return new WaitForSeconds(_lifeTime);
-        Release?.Invoke(this);
+        Released?.Invoke(this);
     }    
 }
