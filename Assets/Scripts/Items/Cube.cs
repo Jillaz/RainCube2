@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-
 public class Cube : Items
 {    
     private bool _isHitPlatform = false;
