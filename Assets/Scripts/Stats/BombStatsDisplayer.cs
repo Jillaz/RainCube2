@@ -1,20 +1,17 @@
-public class BombStatsDisplayer : StatsDisplayer
+using TMPro;
+using UnityEngine;
+
+public class BombStatsDisplayer : MonoBehaviour
 {
-    private BombSpawner _bombSpawner;
+    [SerializeField] private TextMeshProUGUI _textActive;
+    [SerializeField] private TextMeshProUGUI _textCreated;
+    [SerializeField] private TextMeshProUGUI _textSpawned;
+    [SerializeField] private RainCube _genSpawner;
+    private GenericStats<Bomb> _genStats;
 
     private void Start()
     {
-        _bombSpawner = _genSpawner.GetBombSpawner();
-
-        _bombSpawner.TotalNumberChanged += TotalNumber;
-        _bombSpawner.ActiveNumberChanged += ActiveNumber;
-        _bombSpawner.TotalGeted += Spawned;
-    }
-
-    private void OnDisable()
-    {
-        _bombSpawner.TotalNumberChanged -= TotalNumber;
-        _bombSpawner.ActiveNumberChanged -= ActiveNumber;
-        _bombSpawner.TotalGeted -= Spawned;
+        _genStats = new GenericStats<Bomb>(_genSpawner.GetBombSpawner(), _textActive, _textCreated, _textSpawned);
+        _genStats.Init();
     }
 }

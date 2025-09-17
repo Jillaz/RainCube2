@@ -1,11 +1,11 @@
 using System;
 
 public abstract class GenericSpawner<T> where T : Items
-{    
+{
     protected GenericPool<T> _pool;
 
     public GenericSpawner(T prefab, int poolCapacity, int poolMaxSize)
-    {        
+    {
         _pool = new GenericPool<T>(prefab, poolCapacity, poolMaxSize);
     }
 
@@ -23,14 +23,14 @@ public abstract class GenericSpawner<T> where T : Items
 
     public event Action<int> TotalGeted
     {
-        add { _pool.TotalGeted += value; }
-        remove { _pool.TotalGeted -= value; }
+        add => _pool.TotalGeted += value; 
+        remove => _pool.TotalGeted -= value; 
     }
 
     public event Action<T> Realesed
     {
         add => _pool.Realesed += value;
-        remove =>_pool.Realesed -= value;
+        remove => _pool.Realesed -= value;
     }
 
     public abstract void Init();

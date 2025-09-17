@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 
 public class Bomb : Items
@@ -13,9 +12,9 @@ public class Bomb : Items
 
     public event Action<Bomb> Released;
 
-    private void Awake()
-    {
-        _rigidbody = GetComponent<Rigidbody>();
+    protected override void Awake()
+    {        
+        base.Awake();
         _renderer = GetComponent<Renderer>();
         _alphaChanger = GetComponent<AlphaChanger>();
         _color = _renderer.material.color;
@@ -32,11 +31,9 @@ public class Bomb : Items
         _alphaChanger.SetLifeTime(_lifeTime, _color);
     }
 
-    private IEnumerator ExecuteAfterTime()
+    protected override void ExecuteAction()
     {
-        yield return new WaitForSeconds(_lifeTime);
-
         _exploder.Explode();
-        Released?.Invoke(this);        
+        Released?.Invoke(this);
     }
 }

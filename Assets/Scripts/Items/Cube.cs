@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 
 public class Cube : Items
@@ -8,17 +7,17 @@ public class Cube : Items
 
     public event Action<Cube> Released;
 
-    private void Awake()
-    {
-        _rigidbody = GetComponent<Rigidbody>();
-    }
-
     public override void Init()
     {
         _isHitPlatform = false;
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.angularVelocity = Vector3.zero;
         transform.rotation = Quaternion.Euler(Vector3.zero);
+    }
+
+    protected override void ExecuteAction()
+    {        
+        Released?.Invoke(this);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -32,11 +31,5 @@ public class Cube : Items
                 StartCoroutine(ExecuteAfterTime());
             }
         }
-    }
-
-    private IEnumerator ExecuteAfterTime()
-    {
-        yield return new WaitForSeconds(_lifeTime);
-        Released?.Invoke(this);
     }    
 }

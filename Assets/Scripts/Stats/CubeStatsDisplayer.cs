@@ -1,20 +1,17 @@
-public class CubeStatsDisplayer : StatsDisplayer
-{   
-    private CubeSpawner _cubeSpawner; 
+using TMPro;
+using UnityEngine;
+
+public class CubeStatsDisplayer : MonoBehaviour
+{
+    [SerializeField] private TextMeshProUGUI _textActive;
+    [SerializeField] private TextMeshProUGUI _textCreated;
+    [SerializeField] private TextMeshProUGUI _textSpawned;
+    [SerializeField] private RainCube _genSpawner;
+    private GenericStats<Cube> _genStats;
 
     private void Start()
-    {
-        _cubeSpawner = _genSpawner.GetCubeSpawner();
-
-        _cubeSpawner.TotalNumberChanged += TotalNumber;
-        _cubeSpawner.ActiveNumberChanged += ActiveNumber;
-        _cubeSpawner.TotalGeted += Spawned;
-    }
-
-    private void OnDisable()
-    {
-        _cubeSpawner.TotalNumberChanged -= TotalNumber;
-        _cubeSpawner.ActiveNumberChanged -= ActiveNumber;
-        _cubeSpawner.TotalGeted -= Spawned;
-    }
+    {        
+        _genStats = new GenericStats<Cube>(_genSpawner.GetCubeSpawner(), _textActive, _textCreated, _textSpawned);
+        _genStats.Init();     
+    }    
 }

@@ -5,8 +5,8 @@ public class RainCube : MonoBehaviour
     [SerializeField] private Cube _cube;
     [SerializeField] private Bomb _bomb;
     [SerializeField] private CubeSpawnArea _spawnArea;
-    CubeSpawner _cubeSpawner;
-    BombSpawner _bombSpawner;
+    private CubeSpawner _cubeSpawner;
+    private BombSpawner _bombSpawner;
 
     private void Awake()
     {
@@ -16,8 +16,8 @@ public class RainCube : MonoBehaviour
 
     private void Start()
     {
-        _cubeSpawner.Init();
         _bombSpawner.Init();
+        _cubeSpawner.Init();
     }
 
     public CubeSpawner GetCubeSpawner() => _cubeSpawner;
