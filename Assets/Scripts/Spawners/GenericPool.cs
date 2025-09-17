@@ -34,8 +34,9 @@ public class GenericPool<T> where T : Component
 
         return _pool.Get();
     }
-    public void Release(T prefab) => _pool.Release(prefab);
 
+    public void Release(T prefab) 
+        => _pool.Release(prefab);
 
     private T Create()
     {
